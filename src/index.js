@@ -62,7 +62,7 @@ const PineconeRouterMiddleware = {
 				this.settings.selector = selector;
 			}
 			// this will disable notfound handling in favor of server rendered 404 page
-			// this can be ovewritten if needed by making a notfound route with a handler
+			// this can be overwritten if needed by making a notfound route with a handler
 			window.PineconeRouter.notfound = null;
 			window.PineconeRouter.settings.allowNoHandler = true;
 		}
