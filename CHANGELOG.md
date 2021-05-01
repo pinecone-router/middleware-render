@@ -21,4 +21,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased]: https://github.com/pinecone-router/middleware-render/compare/v0.0.0...HEAD
 [0.0.0]: https://github.com/pinecone-router/middleware-render/compare/v0.0.0...v0.0.0
-[0.0.1]: https://github.com/pinecone-router/middleware-render/compare/v0.0.0...HEAD
+[0.0.1]: https://github.com/pinecone-router/middleware-render/compare/v0.0.0...v0.0.1
