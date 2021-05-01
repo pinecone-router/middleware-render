@@ -27,7 +27,6 @@ Include the following `<script>` tag in the `<head>` of your document, before Pi
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/pinecone-router-render@0.0.0/dist/index.umd.js"></script>
-<!---->
 ```
 
 **ES6 Module:**
