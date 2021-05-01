@@ -1,7 +1,7 @@
 # Pinecone Router Middleware Template
 
-[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/pinecone-router/middleware-render?color=%2337C8AB&label=version&sort=semver)](https://github.com/pinecone-router/middleware-render/tree/0.0.0)
-[![npm bundle size](https://img.shields.io/bundlephobia/minzip/pinecone-router-middleware-render?color=37C8AB)](https://bundlephobia.com/result?p=pinecone-router-middleware-render@0.0.0)
+[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/pinecone-router/middleware-render?color=%2337C8AB&label=version&sort=semver)](https://github.com/pinecone-router/middleware-render/tree/0.0.1)
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/pinecone-router-middleware-render?color=37C8AB)](https://bundlephobia.com/result?p=pinecone-router-middleware-render@0.0.1)
 [![Downloads from Jsdelivr Github](https://img.shields.io/jsdelivr/gh/hm/pinecone-router/middleware-render?color=%2337C8AB&logo=github&logoColor=%2337C8AB)](https://www.jsdelivr.com/package/gh/pinecone-router/middleware-render)
 [![Downloads from Jsdelivr NPM](https://img.shields.io/jsdelivr/npm/hm/pinecone-router-middleware-render?color=%2337C8AB&&logo=npm)](https://www.jsdelivr.com/package/npm/pinecone-router-middleware-render)
 [![npm](https://img.shields.io/npm/dm/pinecone-router-middleware-render?color=37C8AB&label=npm&logo=npm&logoColor=37C8AB)](https://npmjs.com/package/pinecone-router-middleware-render)
@@ -26,13 +26,13 @@ A middleware that adds Turbolinks-like functionality for Pinecone Router, while 
 Include the following `<script>` tag in the `<head>` of your document, before Pinecone Router:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/pinecone-router-render@0.0.0/dist/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pinecone-router-render@0.0.1/dist/index.umd.js"></script>
 ```
 
 **ES6 Module:**
 
 ```javascript
-import 'https://cdn.jsdelivr.net/npm/pinecone-router-middleware-render@0.0.0/dist/index.umd.js';
+import 'https://cdn.jsdelivr.net/npm/pinecone-router-middleware-render@0.0.1/dist/index.umd.js';
 ```
 
 ### NPM
@@ -124,7 +124,7 @@ editprofile(context) {
 
 | Version | Pinecone Router Versions |
 | ------- | ------------------------ |
-| 0.0.0   | 0.1.0                    |
+| 0.0.1   | 0.1.0                    |
 
 ## Contributing:
 
