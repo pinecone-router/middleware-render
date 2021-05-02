@@ -1,4 +1,4 @@
-# Pinecone Router Middleware Template
+# Display Server-Rendered Pages with Pinecone Router
 
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/pinecone-router/middleware-render?color=%2337C8AB&label=version&sort=semver)](https://github.com/pinecone-router/middleware-render/tree/0.0.1)
 [![npm bundle size](https://img.shields.io/bundlephobia/minzip/pinecone-router-middleware-render?color=37C8AB)](https://bundlephobia.com/result?p=pinecone-router-middleware-render@0.0.1)

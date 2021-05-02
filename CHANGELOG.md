@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+-   Support for Pinecone Router 0.1.1
+
 ## [0.0.1] - 2021-05-1
 
 ### Fixed
@@ -17,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
--	first version as a separate middleware
+-   first version as a separate middleware
 
 [unreleased]: https://github.com/pinecone-router/middleware-render/compare/0.0.0...HEAD
 [0.0.0]: https://github.com/pinecone-router/middleware-render/compare/0.0.0...0.0.0

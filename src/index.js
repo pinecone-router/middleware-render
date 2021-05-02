@@ -4,7 +4,7 @@ const PineconeRouterMiddleware = {
 	/**
 	 * @property {string} version the version of Pinecone Router this middleware is made for.
 	 */
-	version: '0.0.1',
+	version: '0.0.2',
 	/**
 	 * @property {string} name the name of the middleware.
 	 */
@@ -60,34 +60,41 @@ const PineconeRouterMiddleware = {
 			window.PineconeRouter.notfound = null;
 			window.PineconeRouter.settings.allowNoHandler = true;
 		}
+
+		this.interceptLinks();
 	},
 
 	/**
-	 * This will be called during PineconeRouter.interceptLinks() function
-	 * after the link is checked as a valid navigation link.
-	 * @param {Element} el the anchor element
+	 * This will intercept links for mouse hover
 	 */
-	onLinkIntercepted(el) {
-		if (!this.settings.enabled || !this.settings.preload) {
-			return;
-		}
-		el.addEventListener('mouseover', (e) => {
-			let path = e.target.getAttribute('href');
-			if (path == null) path = '/';
-			if (this.settings.preloaded.path == path) {
+	interceptLinks() {
+		document.querySelectorAll('a').forEach((el) => {
+			// check if we already intercepted this link
+			if (el.hasAttribute('x-link')) return;
+			// check if the link is a navigation/relative link
+			if (window.PineconeRouter.validLink(el) == false) return;
+
+			if (!this.settings.enabled || !this.settings.preload) {
 				return;
 			}
+			el.addEventListener('mouseover', (e) => {
+				let path = e.target.getAttribute('href');
+				if (path == null) path = '/';
+				if (this.settings.preloaded.path == path) {
+					return;
+				}
 
-			window.setTimeout(function () {
-				fetch(path)
-					.then((response) => {
-						return response.text();
-					})
-					.then((response) => {
-						this.settings.preloaded.path = path;
-						this.settings.preloaded.content = response;
-					});
-			}, this.settings.preloadtime);
+				window.setTimeout(function () {
+					fetch(path)
+						.then((response) => {
+							return response.text();
+						})
+						.then((response) => {
+							this.settings.preloaded.path = path;
+							this.settings.preloaded.content = response;
+						});
+				}, this.settings.preloadtime);
+			});
 		});
 	},
 
@@ -110,7 +117,7 @@ const PineconeRouterMiddleware = {
 					this.settings.selector,
 					window.PineconeRouter.routes
 				);
-				window.PineconeRouter.interceptLinks();
+				this.interceptLinks();
 				this.settings.preloaded.path = null;
 				this.settings.preloaded.content = null;
 				window.dispatchEvent(window.PineconeRouter.loadend);
@@ -126,7 +133,7 @@ const PineconeRouterMiddleware = {
 							this.settings.selector,
 							window.PineconeRouter.routes
 						);
-						window.PineconeRouter.interceptLinks();
+						this.interceptLinks();
 						window.dispatchEvent(window.PineconeRouter.loadend);
 						return false;
 					});
