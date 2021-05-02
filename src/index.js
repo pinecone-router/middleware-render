@@ -15,17 +15,17 @@ const PineconeRouterMiddleware = {
 	settings: {
 		enabled: false,
 		selector: 'body',
-		preload: true,
-		/**
-		 * @type {number} milliseconds
-		 * @summary time to wait after mouse over a link before preloading a page
-		 */
-		preloadtime: 200,
-		/**
-		 * @type {object}
-		 * @summary The content that has been preloaded on mouseover event.
-		 */
-		preloaded: { path: null, content: null },
+		// preload: true,
+		// /**
+		//  * @type {number} milliseconds
+		//  * @summary time to wait after mouse over a link before preloading a page
+		//  */
+		// preloadtime: 200,
+		// /**
+		//  * @type {object}
+		//  * @summary The content that has been preloaded on mouseover event.
+		//  */
+		// preloaded: { path: null, content: null },
 	},
 
 	/**
@@ -61,18 +61,22 @@ const PineconeRouterMiddleware = {
 			window.PineconeRouter.settings.allowNoHandler = true;
 		}
 
-		this.interceptLinks();
+		// this.interceptLinks();
 	},
 
 	/**
 	 * This will intercept links for mouse hover
 	 */
-	interceptLinks() {
+/* 	interceptLinks() {
 		document.querySelectorAll('a').forEach((el) => {
 			// check if we already intercepted this link
 			if (el.hasAttribute('x-link')) return;
 			// check if the link is a navigation/relative link
-			if (window.PineconeRouter.validLink(el) == false) return;
+			// TODO: this would need either
+			1 reimporting the functions into this lib which means having double the code running
+			2 making valid link a function under PineconeRouter.validLink which need to import
+			  the 3 utility function from the index file which would look messy  
+			if (validLink(el) == false) return;
 
 			if (!this.settings.enabled || !this.settings.preload) {
 				return;
@@ -96,7 +100,7 @@ const PineconeRouterMiddleware = {
 				}, this.settings.preloadtime);
 			});
 		});
-	},
+	}, */
 
 	/**
 	 * Will be called after the handlers are executed and done.
@@ -112,16 +116,16 @@ const PineconeRouterMiddleware = {
 		// dont fetch the content as it is already loaded
 		if (this.settings.enabled && !firstload && !notfound) {
 			if (this.settings.preloaded.path == path) {
-				renderPage(
-					this.settings.preloaded.content,
-					this.settings.selector,
-					window.PineconeRouter.routes
-				);
-				this.interceptLinks();
-				this.settings.preloaded.path = null;
-				this.settings.preloaded.content = null;
-				window.dispatchEvent(window.PineconeRouter.loadend);
-				return false;
+				// renderPage(
+				// 	this.settings.preloaded.content,
+				// 	this.settings.selector,
+				// 	window.PineconeRouter.routes
+				// );
+				// //this.interceptLinks();
+				// this.settings.preloaded.path = null;
+				// this.settings.preloaded.content = null;
+				// window.dispatchEvent(window.PineconeRouter.loadend);
+				// return false;
 			} else {
 				fetch(path)
 					.then((response) => {
@@ -133,7 +137,7 @@ const PineconeRouterMiddleware = {
 							this.settings.selector,
 							window.PineconeRouter.routes
 						);
-						this.interceptLinks();
+						//this.interceptLinks();
 						window.dispatchEvent(window.PineconeRouter.loadend);
 						return false;
 					});

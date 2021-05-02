@@ -17,7 +17,7 @@ A middleware that adds Turbolinks-like functionality for Pinecone Router, while 
 
 - No server co-operation needed! serve regular html files as normally done.
 - Allow route checking before displaying pages! can be used for client-side authorization etc.
-- Preload pages when hovering over links!
+- Preload pages when hovering over links! (Feature disabled for this current version, will add it back soon)
 
 ## Installation
 
@@ -124,7 +124,7 @@ editprofile(context) {
 
 | Version | Pinecone Router Versions |
 | ------- | ------------------------ |
-| 0.0.1   | 0.1.2                    |
+| 0.0.2   | 0.1.1                    |
 
 ## Contributing:
 
