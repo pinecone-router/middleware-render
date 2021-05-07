@@ -121,14 +121,13 @@ const PineconeRouterMiddleware = {
 	 * during navigation inside PineconeRouter.navigate().
 	 * @param {object} _route the matched route, null if not found.
 	 * @param {string} path the path visited by the client
-	 * @param {boolean} firstload first page load and not link navigation request
-	 * @param {boolean} notfound set to true if the route wasn't found
+	 * @param {boolean} firstLoad first page load and not link navigation request
 	 * @returns {boolean} false to make the navigate function exit (make sure to send the loadend event); none to continue execution.
 	 */
-	onHandlersExecuted(_route, path, firstload, notfound) {
+	onHandlersExecuted(_route, path, firstLoad) {
 		// if using page rendering and the user just (re)loaded the page
 		// dont fetch the content as it is already loaded
-		if (this.settings.enable && !firstload && !notfound) {
+		if (this.settings.enable && !firstLoad && !!route) {
 			if (this.settings.preloaded.path == path) {
 				renderPage(
 					this.settings.preloaded.content,
@@ -158,7 +157,7 @@ const PineconeRouterMiddleware = {
 		}
 	},
 
-	onBeforeHandlersExecuted(_route, _path, _firstLoad, _notFound) {
+	onBeforeHandlersExecuted(_route, _path, _firstLoad) {
 		window.dispatchEvent(this.loadStart);
 	},
 };
