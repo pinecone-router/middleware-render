@@ -2,105 +2,119 @@ import { renderPage } from './utils.js';
 
 const PineconeRouterMiddleware = {
 	/**
-	 * @property {string} version the version of Pinecone Router this middleware is made for.
+	 * @property {string} version the version of this middleware.
 	 */
-	version: '0.0.2',
+	version: '0.0.3',
 	/**
 	 * @property {string} name the name of the middleware.
 	 */
-	name: 'x-render',
+	name: 'render',
 	/**
 	 * @property {object} settings the middleware settings.
 	 */
 	settings: {
-		enabled: false,
+		enable: false,
 		selector: 'body',
-		// preload: true,
-		// /**
-		//  * @type {number} milliseconds
-		//  * @summary time to wait after mouse over a link before preloading a page
-		//  */
-		// preloadtime: 200,
-		// /**
-		//  * @type {object}
-		//  * @summary The content that has been preloaded on mouseover event.
-		//  */
-		// preloaded: { path: null, content: null },
+		preload: true,
+		/**
+		 * @type {number} milliseconds
+		 * @summary time to wait after mouse over a link before preloading a page
+		 */
+		preloadTime: 200,
+		/**
+		 * @type {object}
+		 * @summary The content that has been preloaded on mouseover event.
+		 */
+		preloaded: { path: '', content: null },
 	},
+
+	/**
+	 * @event pinecone-start
+	 * @summary be dispatched to the window after before page start loading.
+	 */
+	loadStart: new Event('pinecone-start'),
+
+	/**
+	 * @event pinecone-end
+	 * @summary will be dispatched to the window after the views are fetched
+	 */
+	loadEnd: new Event('pinecone-end'),
 
 	/**
 	 * This will be called at router initialization.
 	 * used for detecting router settings.
 	 * @param {object} component the router's alpine component.
 	 */
-	init(component) {
-		if (
-			window.PineconeRouterMiddlewares.find((m) => m.name == 'x-views') !=
-			null
-		) {
+	init(component, settings) {
+		if (settings?.middlewares?.views) {
 			throw new Error(
-				`Pinecone Router ${this.name}: Cannot use x-render along with x-views.`
+				`Pinecone Router ${this.name}: Cannot use views middleware along with render.`
 			);
 		}
 
-		if (component.$el.hasAttribute('x-render')) {
-			if (window.PineconeRouter.settings.hash) {
+		//load settings
+		this.settings = {
+			...this.settings,
+			...(settings?.middlewares?.[this.name] ?? {}),
+		};
+
+		if (this.settings.enable) {
+			if (settings.hash) {
 				throw new Error(
 					`Pinecone Router ${this.name}: Cannot use x-render along with x-hash.`
 				);
 			}
-			this.settings.enabled = true;
-			// check if a selector was set
-			let selector = component.$el.getAttribute('x-render');
-			if (selector != '') {
-				this.settings.selector = selector;
-			}
-			// this will disable notfound handling in favor of server rendered 404 page
-			// this can be overwritten if needed by making a notfound route with a handler
-			window.PineconeRouter.notfound = null;
 			window.PineconeRouter.settings.allowNoHandler = true;
+			component.$el.setAttribute('x-router', 'loaded');
+			if (this.settings.preload) this.interceptLinks(settings.hash);
 		}
-
-		// this.interceptLinks();
 	},
 
 	/**
 	 * This will intercept links for mouse hover
 	 */
-/* 	interceptLinks() {
-		document.querySelectorAll('a').forEach((el) => {
-			// check if we already intercepted this link
-			if (el.hasAttribute('x-link')) return;
-			// check if the link is a navigation/relative link
-			// TODO: this would need either
-			1 reimporting the functions into this lib which means having double the code running
-			2 making valid link a function under PineconeRouter.validLink which need to import
-			  the 3 utility function from the index file which would look messy  
-			if (validLink(el) == false) return;
+	interceptLinks(hash) {
+		var t = this;
+		document.body.addEventListener('onmouseover', function (e) {
+			// ensure link
+			// use shadow dom when available if not, fall back to composedPath()
+			// for browsers that only have shady
+			let el = e.target;
 
-			if (!this.settings.enabled || !this.settings.preload) {
-				return;
-			}
-			el.addEventListener('mouseover', (e) => {
-				let path = e.target.getAttribute('href');
-				if (path == null) path = '/';
-				if (this.settings.preloaded.path == path) {
-					return;
+			let eventPath =
+				e.path || (e.composedPath ? e.composedPath() : null);
+
+			if (eventPath) {
+				for (let i = 0; i < eventPath.length; i++) {
+					if (!eventPath[i].nodeName) continue;
+					if (eventPath[i].nodeName.toUpperCase() !== 'A') continue;
+					if (!eventPath[i].href) continue;
+
+					el = eventPath[i];
+					break;
 				}
+			}
 
-				window.setTimeout(function () {
-					fetch(path)
-						.then((response) => {
-							return response.text();
-						})
-						.then((response) => {
-							this.settings.preloaded.path = path;
-							this.settings.preloaded.content = response;
-						});
-				}, this.settings.preloadtime);
-			});
+			// allow skipping handler
+			if (el.hasAttribute('native')) return;
+
+			// check if the link is a navigation/relative link
+			var check = window.PineconeRouter.validLink(el, hash);
+			if (!check.valid) return;
+			if (t.settings.preloaded.path == check.link) return;
+
+			window.setTimeout(function () {
+				fetch(check.link)
+					.then((response) => {
+						return response.text();
+					})
+					.then((response) => {
+						t.settings.preloaded.path = path;
+						t.settings.preloaded.content = response;
+					});
+			}, t.settings.preloadTime);
 		});
-	}, */
+	},
 
 	/**
 	 * Will be called after the handlers are executed and done.
@@ -114,18 +128,17 @@ const PineconeRouterMiddleware = {
 	onHandlersExecuted(_route, path, firstload, notfound) {
 		// if using page rendering and the user just (re)loaded the page
 		// dont fetch the content as it is already loaded
-		if (this.settings.enabled && !firstload && !notfound) {
+		if (this.settings.enable && !firstload && !notfound) {
 			if (this.settings.preloaded.path == path) {
-				// renderPage(
-				// 	this.settings.preloaded.content,
-				// 	this.settings.selector,
-				// 	window.PineconeRouter.routes
-				// );
-				// //this.interceptLinks();
-				// this.settings.preloaded.path = null;
-				// this.settings.preloaded.content = null;
-				// window.dispatchEvent(window.PineconeRouter.loadend);
-				// return false;
+				renderPage(
+					this.settings.preloaded.content,
+					this.settings.selector,
+					window.PineconeRouter.routes
+				);
+				this.settings.preloaded.path = null;
+				this.settings.preloaded.content = null;
+				window.dispatchEvent(this.loadEnd);
+				return false;
 			} else {
 				fetch(path)
 					.then((response) => {
@@ -138,11 +151,15 @@ const PineconeRouterMiddleware = {
 							window.PineconeRouter.routes
 						);
 						//this.interceptLinks();
-						window.dispatchEvent(window.PineconeRouter.loadend);
+						window.dispatchEvent(this.loadEnd);
 						return false;
 					});
 			}
 		}
+	},
+
+	onBeforeHandlersExecuted(_route, _path, _firstLoad, _notFound) {
+		window.dispatchEvent(this.loadStart);
 	},
 };
 

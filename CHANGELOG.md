@@ -7,17 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.0.2] - 2021-05-2
+## [0.0.3] - 2021-05-07
 
-### Removed
+### Changed
 
--   Disabled preloading till I found a solution.
+-   Update for Pinecone Router 0.3.0
 
-### Fixed
-
--   Support for Pinecone Router 0.1.1
-
-## [0.0.1] - 2021-05-1
+## [0.0.1] - 2021-05-01
 
 ### Fixed
 
@@ -32,4 +28,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [unreleased]: https://github.com/pinecone-router/middleware-render/compare/0.0.0...HEAD
 [0.0.0]: https://github.com/pinecone-router/middleware-render/compare/0.0.0...0.0.0
 [0.0.1]: https://github.com/pinecone-router/middleware-render/compare/0.0.0...0.0.1
-[0.0.1]: https://github.com/pinecone-router/middleware-render/compare/0.0.1...0.0.2
+[0.0.2]: https://github.com/pinecone-router/middleware-render/compare/0.0.1...0.0.2
+[0.0.1]: https://github.com/pinecone-router/middleware-render/compare/0.0.2...0.0.3
