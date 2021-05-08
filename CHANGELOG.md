@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.0.3] - 2021-05-07
+## [0.0.3] - 2021-05-08
 
 ### Changed
 
@@ -29,4 +29,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.0.0]: https://github.com/pinecone-router/middleware-render/compare/0.0.0...0.0.0
 [0.0.1]: https://github.com/pinecone-router/middleware-render/compare/0.0.0...0.0.1
 [0.0.2]: https://github.com/pinecone-router/middleware-render/compare/0.0.1...0.0.2
-[0.0.1]: https://github.com/pinecone-router/middleware-render/compare/0.0.2...0.0.3
+[0.0.3]: https://github.com/pinecone-router/middleware-render/compare/0.0.2...0.0.3
