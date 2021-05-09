@@ -23,6 +23,8 @@ Development version, watch for v1.0 :)
 
 ## Installation
 
+Current version not working! sorry
+
 ### CDN
 
 Include the following `<script>` tag in the `<head>` of your document, before Pinecone Router:
