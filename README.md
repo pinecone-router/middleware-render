@@ -9,6 +9,8 @@
 
 A middleware for [Pinecone Router](https://github.com/pinecone-router/router) that add Turbolinks-like functionality with extra features.
 
+> # Warning: not working currently, will work on it asap, just don't have time
+
 ## About
 
 A middleware that adds Turbolinks-like functionality for Pinecone Router, while still allowing you to handle routes!
